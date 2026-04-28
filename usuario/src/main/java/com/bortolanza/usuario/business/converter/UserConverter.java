@@ -59,6 +59,7 @@ public class UserConverter {
                 .email(userDTO.getEmail())
                 .password(userDTO.getPassword())
                 .address(forListAddress(userDTO.getAddress()))
+                .phone(forListPhone(userDTO.getPhone()))
                 .build();
     }
 
