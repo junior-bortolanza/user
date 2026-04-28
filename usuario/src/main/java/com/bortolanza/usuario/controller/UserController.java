@@ -1,6 +1,8 @@
 package com.bortolanza.usuario.controller;
 
 import com.bortolanza.usuario.business.UserService;
+import com.bortolanza.usuario.business.dto.AddressDTO;
+import com.bortolanza.usuario.business.dto.PhoneDTO;
 import com.bortolanza.usuario.business.dto.UserDTO;
 import com.bortolanza.usuario.infrastructure.entity.User;
 import com.bortolanza.usuario.infrastructure.security.JwtUtil;
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<User> searchUserByEmail(@RequestParam("email") String email) {
+    public ResponseEntity<UserDTO> searchUserByEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(userService.searchUserByEmail(email));
     }
 
@@ -46,8 +48,21 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO dto, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO dto,
+                                              @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(userService.updateUserData(token, dto));
+    }
+
+    @PutMapping("/endereco")
+    public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO dto,
+                                                    @RequestParam("id") Long id) {
+        return ResponseEntity.ok(userService.updateAddress(id, dto));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<PhoneDTO> updateAddress(@RequestBody PhoneDTO dto,
+                                                  @RequestParam("id") Long id) {
+        return ResponseEntity.ok(userService.updatePhone(id, dto));
     }
 }
 
