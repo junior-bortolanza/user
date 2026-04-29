@@ -4,7 +4,6 @@ import com.bortolanza.usuario.business.UserService;
 import com.bortolanza.usuario.business.dto.AddressDTO;
 import com.bortolanza.usuario.business.dto.PhoneDTO;
 import com.bortolanza.usuario.business.dto.UserDTO;
-import com.bortolanza.usuario.infrastructure.entity.User;
 import com.bortolanza.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +62,18 @@ public class UserController {
     public ResponseEntity<PhoneDTO> updateAddress(@RequestBody PhoneDTO dto,
                                                   @RequestParam("id") Long id) {
         return ResponseEntity.ok(userService.updatePhone(id, dto));
+    }
+
+    @PostMapping("/endereco")
+    public ResponseEntity<AddressDTO> registerAddress(@RequestBody AddressDTO dto,
+                                                      @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(userService.registerAddress(token, dto));
+    }
+
+    @PostMapping("/telefone")
+    public ResponseEntity<PhoneDTO> resisterPhone(@RequestBody PhoneDTO dto,
+                                                  @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(userService.registerPhone(token, dto));
     }
 }
 
