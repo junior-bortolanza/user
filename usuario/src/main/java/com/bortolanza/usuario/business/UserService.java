@@ -9,11 +9,18 @@ import com.bortolanza.usuario.infrastructure.entity.Phone;
 import com.bortolanza.usuario.infrastructure.entity.User;
 import com.bortolanza.usuario.infrastructure.exceptions.ConflictException;
 import com.bortolanza.usuario.infrastructure.exceptions.ResourceNotFoundException;
+import com.bortolanza.usuario.infrastructure.exceptions.UnauthorizedException;
 import com.bortolanza.usuario.infrastructure.repository.AddressRepository;
 import com.bortolanza.usuario.infrastructure.repository.PhoneRepository;
 import com.bortolanza.usuario.infrastructure.repository.UserRepository;
 import com.bortolanza.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +34,8 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final AddressRepository addressRepository;
     private final PhoneRepository phoneRepository;
+    private final AuthenticationManager authenticationManager;
+
 
     public UserDTO saveUser(UserDTO userDTO) {
         emailExists(userDTO.getEmail());
@@ -34,6 +43,18 @@ public class UserService {
         User user = userConverter.forUser(userDTO);
         user = userRepository.save(user);
         return userConverter.forUserDTO(user);
+    }
+
+    public String authenticateUser(UserDTO userDTO) throws UnauthorizedException {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userDTO.getEmail(),
+                            userDTO.getPassword())
+            );
+            return "Bearer " + jwtUtil.generateToken(authentication.getName());
+        } catch (BadCredentialsException | UsernameNotFoundException | AuthorizationDeniedException e) {
+               throw new UnauthorizedException("User or password invalid", e.getCause());
+        }
     }
 
     public void emailExists(String email){
