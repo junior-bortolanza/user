@@ -113,6 +113,7 @@ public class UserConverter {
                 .complement(dto.getComplement()!= null ? dto.getComplement() : entity.getComplement())
                 .zipCode(dto.getZipCode() != null ? dto.getZipCode() : entity.getZipCode())
                 .state(dto.getState()!= null ? dto.getState() : entity.getState())
+                .userId(entity.getUserId())
                 .build();
     }
 
@@ -121,6 +122,7 @@ public class UserConverter {
                 .id(entity.getId())
                 .ddd(dto.getDdd() != null ? dto.getDdd() : entity.getDdd())
                 .number(dto.getNumber() != null ? dto.getNumber() : entity.getNumber())
+                .userId(entity.getUserId())
                 .build();
     }
 
