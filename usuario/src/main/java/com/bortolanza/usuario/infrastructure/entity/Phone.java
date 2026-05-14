@@ -3,6 +3,8 @@ package com.bortolanza.usuario.infrastructure.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -10,7 +12,7 @@ import lombok.*;
 @Entity
 @Table(name = "phone")
 @Builder
-public class Phone {
+public class Phone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

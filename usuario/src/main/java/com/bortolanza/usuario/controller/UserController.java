@@ -7,7 +7,6 @@ import com.bortolanza.usuario.business.dto.PhoneDTO;
 import com.bortolanza.usuario.business.dto.UserDTO;
 import com.bortolanza.usuario.infrastructure.client.ViaCepDTO;
 import com.bortolanza.usuario.infrastructure.exceptions.UnauthorizedException;
-import com.bortolanza.usuario.infrastructure.security.JwtUtil;
 import com.bortolanza.usuario.infrastructure.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,7 +14,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

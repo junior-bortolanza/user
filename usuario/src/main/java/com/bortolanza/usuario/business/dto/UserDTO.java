@@ -1,6 +1,5 @@
 package com.bortolanza.usuario.business.dto;
 
-import com.bortolanza.usuario.infrastructure.entity.Address;
 import lombok.*;
 
 import java.util.List;
